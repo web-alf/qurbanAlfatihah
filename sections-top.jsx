@@ -152,7 +152,7 @@ function Hero({ variant, onOrder }){
         </div>
         <div className="hero-art reveal d2">
           <div className="hero-flyer">
-            <img className="hero-flyer-img" src="./hero.png" alt="Flyer Qurban Alfatihah" />
+            <img className="hero-flyer-img" src="assets/hero.png" alt="Flyer Qurban Alfatihah" />
           </div>
         </div>
       </div>
@@ -195,9 +195,9 @@ function About(){
     <section className="about section-pad" id="tentang">
       <div className="wrap about-grid">
         <div className="about-imgs reveal">
-          <img src="doc-1.jpg" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
-          <img src="doc-2.jpg" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
-          <img src="doc-3.jpg" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
+          <img src="assets/doc-1.JPG" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
+          <img src="assets/doc-2.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
+          <img src="assets/doc-3.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
         </div>
         <div className="section-head reveal d1">
           <span className="eyebrow">Tentang Kami</span>

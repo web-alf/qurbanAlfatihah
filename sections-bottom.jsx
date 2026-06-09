@@ -20,9 +20,12 @@ function Programs({ onOrder }){
               <div className="prog-media">
                 <span className={'prog-tag'+(p.tagGreen?' green':'')}>{p.tag}</span>
                 <img
-                  src={getProgramImageSrc(p)}
+                  src="assets/hero.png"
                   alt={p.title}
-                  onError={(e)=>{ e.currentTarget.onerror=null; e.currentTarget.src='./hero.png'; }}
+                  onError={(e)=>{
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'assets/hero.png';
+                  }}
                 />
               </div>
               <div className="prog-body">
@@ -140,16 +143,17 @@ function Docs(){
   const { useState, useEffect } = React;
 
   const photos = [
-    './doc-1.jpg',
-    './doc-2.jpg',
-    './doc-3.jpg',
-    './doc-4.jpg',
-    './doc-5.jpg',
-    './doc-6.jpg'
+    'assets/doc-1.JPG',
+    'assets/doc-2.JPG',
+    'assets/doc-3.JPG',
+    'assets/doc-4.JPG',
+    'assets/doc-5.JPG',
+    'assets/doc-6.JPG'
   ];
 
   const [idx, setIdx] = useState(0);
   const [per, setPer] = useState(3);
+  const maxIdx = Math.max(0, photos.length - per);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -158,8 +162,6 @@ function Docs(){
 
     return () => clearInterval(timer);
   }, [maxIdx]);
-
-  const maxIdx = Math.max(0, photos.length - per);
 
   const next = () => {
     setIdx(v => Math.min(v + 1, maxIdx));
