@@ -195,9 +195,9 @@ function About(){
     <section className="about section-pad" id="tentang">
       <div className="wrap about-grid">
         <div className="about-imgs reveal">
-          <img src="assets/doc-1.JPG" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
-          <img src="assets/doc-2.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
-          <img src="assets/doc-3.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
+          <img src="assets/about3.JPG" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
+          <img src="assets/about2.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
+          <img src="assets/about1.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
         </div>
         <div className="section-head reveal d1">
           <span className="eyebrow">Tentang Kami</span>

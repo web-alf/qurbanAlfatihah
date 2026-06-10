@@ -20,7 +20,7 @@ function Programs({ onOrder }){
               <div className="prog-media">
                 <span className={'prog-tag'+(p.tagGreen?' green':'')}>{p.tag}</span>
                 <img
-                  src="assets/hero.png"
+                  src={`assets/program${i + 1}.jpg`}
                   alt={p.title}
                   onError={(e)=>{
                     e.currentTarget.onerror = null;
@@ -141,37 +141,46 @@ window.Testimoni = Testimoni;
 
 function Docs(){
   const { useState, useEffect } = React;
-
-  const photos = [
-    'assets/doc-1.JPG',
-    'assets/doc-2.JPG',
-    'assets/doc-3.JPG',
-    'assets/doc-4.JPG',
-    'assets/doc-5.JPG',
-    'assets/doc-6.JPG'
+  const docs = [
+    {
+      title: "Keseruan Proses Penyembelihan",
+      photos: [
+        "assets/sembelih1.JPG",
+        "assets/sembelih2.JPG",
+        "assets/sembelih3.JPG"
+      ]
+    },
+    {
+      title: "Kunjungan Shohibul Qurban",
+      photos: [
+        "assets/kunjungan1.jpg",
+        "assets/kunjungan2.webp",
+        "assets/kunjungan3.webp"
+      ]
+    },
+    {
+      title: "Distribusi Daging Qurban",
+      photos: [
+        "assets/distribusi1.JPG",
+        "assets/distribusi2.png",
+        "assets/distribusi3.JPG"
+      ]
+    }
   ];
 
-  const [idx, setIdx] = useState(0);
-  const [per, setPer] = useState(3);
-  const maxIdx = Math.max(0, photos.length - per);
+  const [slide, setSlide] = useState([0,0,0]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIdx(v => (v >= maxIdx ? 0 : v + 1));
+      setSlide(prev =>
+        prev.map((v,i)=>
+          v >= docs[i].photos.length - 1 ? 0 : v + 1
+        )
+      );
     }, 4000);
 
     return () => clearInterval(timer);
-  }, [maxIdx]);
-
-  const next = () => {
-    setIdx(v => Math.min(v + 1, maxIdx));
-  };
-
-  const prev = () => {
-    setIdx(v => Math.max(v - 1, 0));
-  };
-
-  const pct = idx * (100 / per);
+  }, []);
 
   return (
     <section className="docs section-pad">
@@ -188,36 +197,57 @@ function Docs(){
           </p>
         </div>
 
-        <div className="docs-slider">
+        <div className="docs-grid">
+          {docs.map((group, groupIndex) => (
+            <div className="docs-column" key={groupIndex}>
 
-          <div className="docs-viewport">
-            <div
-              className="docs-track"
-              style={{
-                transform:`translateX(-${pct}%)`
-              }}
-            >
-              {photos.map((img,i)=>(
-                <div className="docs-card" key={i}>
-                  <img src={img} alt={`Dokumentasi ${i+1}`} />
-                </div>
-              ))}
+              <h3>{group.title}</h3>
+
+              <div className="docs-image">
+                <img
+                  src={group.photos[slide[groupIndex]]}
+                  alt={group.title}
+                />
+              </div>
+
+              <div className="slider-ctrl">
+                <button
+                  onClick={() =>
+                    setSlide(prev => {
+                      const copy = [...prev];
+                      copy[groupIndex] =
+                        copy[groupIndex] === 0
+                          ? group.photos.length - 1
+                          : copy[groupIndex] - 1;
+                      return copy;
+                    })
+                  }
+                >
+                  <Ic.left />
+                </button>
+
+                <button
+                  onClick={() =>
+                    setSlide(prev => {
+                      const copy = [...prev];
+                      copy[groupIndex] =
+                        copy[groupIndex] >= group.photos.length - 1
+                          ? 0
+                          : copy[groupIndex] + 1;
+                      return copy;
+                    })
+                  }
+                >
+                  <Ic.right />
+                </button>
+              </div>
+
             </div>
-          </div>
-
-          <div className="slider-ctrl">
-            <button onClick={prev} disabled={idx===0}>
-              <Ic.left />
-            </button>
-
-            <button onClick={next} disabled={idx>=maxIdx}>
-              <Ic.right />
-            </button>
-          </div>
-
+          ))}
         </div>
 
       </div>
+
     </section>
   );
 }
