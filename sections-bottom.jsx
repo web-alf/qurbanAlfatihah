@@ -12,7 +12,7 @@ function Programs({ onOrder }){
         <div className="section-head reveal" style={{maxWidth:700}}>
           <span className="eyebrow">Pilih Caramu Berbagi Kebahagiaan</span>
           <h2 className="h-section text-balance">Pilihan hewan & harga yang <span className="green-text">variatif</span></h2>
-          <p className="lede text-pretty">Tiga program qurban, satu tujuan—menebar senyum tulus. Pilih yang paling pas di hatimu.</p>
+          <p className="lede text-pretty">Tiga program qurban, satu tujuan untuk menebar senyum tulus. Pilih yang paling pas di hatimu.</p>
         </div>
         <div className="prog-grid">
           {window.PROGRAMS.map((p,i)=>(
@@ -20,11 +20,11 @@ function Programs({ onOrder }){
               <div className="prog-media">
                 <span className={'prog-tag'+(p.tagGreen?' green':'')}>{p.tag}</span>
                 <img
-                  src={`assets/program${i + 1}.jpg`}
+                  src={`assets/program${i + 1}.webp`}
                   alt={p.title}
                   onError={(e)=>{
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'assets/hero.png';
+                    e.currentTarget.src = 'assets/hero.webp';
                   }}
                 />
               </div>
@@ -145,15 +145,15 @@ function Docs(){
     {
       title: "Keseruan Proses Penyembelihan",
       photos: [
-        "assets/sembelih1.JPG",
-        "assets/sembelih2.JPG",
-        "assets/sembelih3.JPG"
+        "assets/sembelih1.webp",
+        "assets/sembelih2.webp",
+        "assets/sembelih3.webp"
       ]
     },
     {
       title: "Kunjungan Shohibul Qurban",
       photos: [
-        "assets/kunjungan1.jpg",
+        "assets/kunjungan1.webp",
         "assets/kunjungan2.webp",
         "assets/kunjungan3.webp"
       ]
@@ -161,9 +161,9 @@ function Docs(){
     {
       title: "Distribusi Daging Qurban",
       photos: [
-        "assets/distribusi1.JPG",
-        "assets/distribusi2.png",
-        "assets/distribusi3.JPG"
+        "assets/distribusi1.webp",
+        "assets/distribusi2.webp",
+        "assets/distribusi3.webp"
       ]
     }
   ];
@@ -189,10 +189,10 @@ function Docs(){
         <div className="section-head reveal" style={{maxWidth:640}}>
           <span className="eyebrow">Dokumentasi</span>
           <h2 className="h-section text-balance">
-            Momen nyata penyaluran qurban Anda
+            Momen Nyata Penyaluran Qurban Anda
           </h2>
           <p className="lede text-pretty">
-            Setiap prosesnya kami rekam—dari penyembelihan hingga
+            Setiap prosesnya kami rekam mulai dari penyembelihan hingga
             senyuman penerima manfaat di pelosok negeri.
           </p>
         </div>
@@ -265,7 +265,7 @@ function CtaBand({ onOrder }){
             <span className="eyebrow on-dark" style={{justifyContent:'center',display:'flex'}}>Ambil Peluang Ibadahmu</span>
             <h2 className="h-section text-balance" style={{marginTop:16}}>Ambil peluang ibadah qurban Anda hari ini</h2>
             <p>Satu langkah kecil darimu, sejuta senyum bagi mereka. Jangan tunda lagi kebaikan ini.</p>
-            <button className="btn btn-primary" onClick={()=>onOrder()}>Qurban Sekarang Juga! <Ic.arrow className="arr" style={{width:20,height:20}}/></button>
+            <a href="#program" className="btn btn-primary btn-lg">Qurban Sekarang Juga!<Ic.arrow className="arr" style={{ width: 20, height: 20 }} /></a>
           </div>
         </div>
       </div>

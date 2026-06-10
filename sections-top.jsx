@@ -75,9 +75,6 @@ function Nav({ onOrder }){
         <div className="nav-links">
           {links.map(([h,t])=><a key={h} href={h}>{t}</a>)}
         </div>
-        <div className="cta-wrap">
-          <button className="btn btn-primary" onClick={onOrder}>Qurban Sekarang <Ic.arrow className="arr" style={{width:18,height:18}}/></button>
-        </div>
       </div>
     </nav>
   );
@@ -145,14 +142,13 @@ function Hero({ variant, onOrder }){
           <h1 className="h-display reveal d1" style={{marginTop:18}}>Satu Hewan Qurban, Tebarkan <span className="accent-text">Seribu Senyuman</span> Tulus yang Tak Terlupakan</h1>
           <p className="lede text-pretty reveal d2">Jangan jadikan qurban hanya sekedar serangkaian ritual ibadah, jadikan juga sebagai kenangan yang terus melekat lewat senyuman mereka setiap menerima kebaikanmu.</p>
           <div className="hero-cta reveal d3">
-            <button className="btn btn-primary btn-lg" onClick={onOrder}>Qurban Sekarang Juga! <Ic.arrow className="arr" style={{width:20,height:20}}/></button>
-            <a className="btn btn-ghost btn-lg" href="#program" style={{color:'var(--green-900)'}}><span>Lihat Program</span></a>
+            <a href="#program" className="btn btn-primary btn-lg">Qurban Sekarang Juga!<Ic.arrow className="arr" style={{ width: 20, height: 20 }} /></a>
           </div>
           <div className="reveal d4">{stats}</div>
         </div>
         <div className="hero-art reveal d2">
           <div className="hero-flyer">
-            <img className="hero-flyer-img" src="assets/hero.png" alt="Flyer Qurban Alfatihah" />
+            <img className="hero-flyer-img" src="assets/hero.webp" alt="Flyer Qurban Alfatihah" />
           </div>
         </div>
       </div>
@@ -195,9 +191,9 @@ function About(){
     <section className="about section-pad" id="tentang">
       <div className="wrap about-grid">
         <div className="about-imgs reveal">
-          <img src="assets/about3.JPG" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
-          <img src="assets/about2.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
-          <img src="assets/about1.JPG" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
+          <img src="assets/about3.webp" className="tall" shape="rounded" radius="22" style={{minHeight:340}} placeholder="Foto penyaluran"></img>
+          <img src="assets/about2.webp" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto kegiatan"></img>
+          <img src="assets/about1.webp" shape="rounded" radius="22" style={{minHeight:162}} placeholder="Foto anak yatim"></img>
         </div>
         <div className="section-head reveal d1">
           <span className="eyebrow">Tentang Kami</span>
@@ -229,7 +225,7 @@ function Ayat(){
         <p className="ar" lang="ar">فَصَلِّ لِرَبِّكَ وَٱنْحَرْ</p>
         <p className="tr text-balance">“Maka dirikanlah salat karena Tuhanmu; dan berqurbanlah.”</p>
         <p className="src">QS. Al-Kautsar : 2</p>
-        <p className="note text-pretty">Setiap pengorbanan tidak akan sia-sia di hadapan Allah, sekecil apapun itu pasti akan pengorbanan kita. Sesungguhnya Allah tidak akan memandang besar kecilnya suatu pengorbanan setiap hamba, melainkan dari niat tulus dan keikhlasannya. Jangan tunda lagi, satu langkah kecil akan membawa dampak kebaikan bagi mereka yang membutuhkan.</p>
+        <p className="note text-pretty">Setiap pengorbanan tidak akan sia-sia di hadapan Allah, sekecil apapun itu pasti akan sangat bernilai. Sesungguhnya Allah tidak akan memandang besar kecilnya suatu pengorbanan setiap hamba, melainkan dari niat tulus dan keikhlasannya. Jangan tunda lagi, satu langkah kecil akan membawa dampak kebaikan bagi mereka yang membutuhkan.</p>
       </div>
     </section>
   );
@@ -238,7 +234,7 @@ window.Ayat = Ayat;
 
 function WhyUs(){
   const feats=[
-    [Ic.shield,'Amanah Terjaga','Setiap amanah dijaga dengan baik—kami pastikan daging tersalurkan tepat ke tangan yang membutuhkan.'],
+    [Ic.shield,'Amanah Terjaga','Setiap amanah dijaga dengan baik. Kami pastikan daging tersalurkan tepat ke tangan yang membutuhkan.'],
     [Ic.camera,'Dokumentasi Real-time','Setiap proses kami dokumentasikan langsung, setiap distribusi kami laporkan kepada Anda.'],
     [Ic.users,'Tim Berpengalaman','Dikerjakan oleh tim berpengalaman dengan pemantauan langsung di lapangan.'],
     [Ic.heart,'Dipercaya Nasional','Ribuan donatur dari seluruh Indonesia & diliput media nasional terkemuka.'],

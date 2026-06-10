@@ -25,7 +25,7 @@ function Logo({ dark }){
     <a href="#top" className="logo" aria-label="Qurban Alfatihah">
       <span className="mark">
         <img
-          src="assets/logo.png"
+          src="assets/logo.webp"
           alt="Qurban Alfatihah"
         ></img>
       </span>
