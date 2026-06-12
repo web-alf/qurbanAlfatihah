@@ -1,6 +1,4 @@
-/* data.jsx — content for Qurban Alfatihah (from brief copy) */
-
-window.PROGRAMS = [
+export const PROGRAMS = [
   {
     id: 'senyum',
     tag: 'Paling Berdampak', tagGreen: false,
@@ -36,7 +34,7 @@ window.PROGRAMS = [
   },
 ];
 
-window.MEDIA = [
+export const MEDIA = [
   { net: 'Indosiar',  title: 'Fokus Indosiar',     sub: 'Liputan Program', slot: 'med-1', link: 'https://youtu.be/xdQ0Pdwcgqs?si=TJBOhi5bUZxqQCRa' },
   { net: 'CNN',       title: 'CNN Live Streaming',  sub: 'Live Report',     slot: 'med-2', link: 'https://youtu.be/O7tQZkCcr5Y?si=Lk9-N4DzUUYOmiMb' },
   { net: 'tvOne',     title: 'tvOne',               sub: 'Berita Nasional', slot: 'med-3', link: 'https://youtu.be/E_QN7L-g-9A?si=jjXEmCTdc89iNYeZ' },
@@ -47,10 +45,10 @@ window.MEDIA = [
   { net: 'TATV',      title: 'TATV Jateng',         sub: 'Berita Daerah',   slot: 'med-8', link: 'https://youtu.be/tYZi4DBYbcU?si=Yo-ocd7z959Wh0ZA' },
 ];
 
-window.TESTI = [
+export const TESTI = [
   { name:'Andini', city:'Surabaya', text:'Saya ragu awalnya berqurban online. Tapi Alfatihah mengirimkan foto dan laporan lengkap. Hati saya benar-benar tenang.' },
   { name:'Rifki', city:'Semarang', text:'Sudah dua kali saya berqurban di sini. Bukan hanya karena amanah, tapi karena saya tahu penyalurannya benar-benar sampai ke anak-anak yang membutuhkan.' },
   { name:'Bunga', city:'Bandung', text:'Melihat video dokumentasinya, saya tidak pernah ragu qurban di sini. Terima kasih Alfatihah sudah menyampaikan qurban saya sampai ke pelosok untuk para santri.' },
 ];
 
-window.rupiah = (n)=> 'Rp ' + n.toLocaleString('id-ID');
+export const rupiah = (n) => 'Rp ' + n.toLocaleString('id-ID');
