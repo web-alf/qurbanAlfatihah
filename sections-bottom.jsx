@@ -1,44 +1,44 @@
-/* sections-bottom.jsx — Programs, Media slider, Testimoni, Docs, CTA, Footer, Order modal */
+import React, { useState, useRef, useEffect } from 'react';
+import { Ic, Logo } from './icons.jsx';
+import { PROGRAMS, MEDIA, TESTI, rupiah } from './data.jsx';
 
-function getProgramImageSrc(p){
-  const slug = (p.link || '').replace(/\/?$/, '').split('/').pop().split('?')[0];
-  return p.image || `./${slug}.png`;
-}
-
-function Programs({ onOrder }){
+export function Programs({ onOrder }) {
   return (
     <section className="programs section-pad" id="program">
       <div className="wrap">
-        <div className="section-head reveal" style={{maxWidth:700}}>
+        <div className="section-head reveal" style={{ maxWidth: 700 }}>
           <span className="eyebrow">Pilih Caramu Berbagi Kebahagiaan</span>
           <h2 className="h-section text-balance">Pilihan hewan & harga yang <span className="green-text">variatif</span></h2>
           <p className="lede text-pretty">Tiga program qurban, satu tujuan untuk menebar senyum tulus. Pilih yang paling pas di hatimu.</p>
         </div>
         <div className="prog-grid">
-          {window.PROGRAMS.map((p,i)=>(
-            <article className={'prog reveal d'+(i+1)} key={p.id}>
+          {PROGRAMS.map((p, i) => (
+            <article className={'prog reveal d' + (i + 1)} key={p.id}>
               <div className="prog-media">
-                <span className={'prog-tag'+(p.tagGreen?' green':'')}>{p.tag}</span>
+                <span className={'prog-tag' + (p.tagGreen ? ' green' : '')}>{p.tag}</span>
                 <img
-                  src={`assets/program${i + 1}.webp`}
+                  src={`/assets/program${i + 1}.webp`}
                   alt={p.title}
-                  onError={(e)=>{
+                  width={400}
+                  height={300}
+                  loading="lazy"
+                  onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'assets/hero.webp';
+                    e.currentTarget.src = '/assets/hero.webp';
                   }}
                 />
               </div>
               <div className="prog-body">
                 <h3 className="h-card">{p.title}</h3>
                 <p>{p.desc}</p>
-                <div className="prog-meta"><span>Target: <b>{p.target}</b></span><span><b>{Math.round(p.raised/p.goal*100)}%</b> tercapai</span></div>
-                <div className="prog-progress"><i data-w={Math.round(p.raised/p.goal*100)}></i></div>
+                <div className="prog-meta"><span>Target: <b>{p.target}</b></span><span><b>{Math.round(p.raised / p.goal * 100)}%</b> tercapai</span></div>
+                <div className="prog-progress"><i data-w={Math.round(p.raised / p.goal * 100)}></i></div>
                 <div className="prog-meta"><span><b>{p.raised}</b> {p.unit}</span><span>dari {p.goal}</span></div>
                 <div className="prog-price"><span className="from">{p.from}</span></div>
-                <div className="prog-price" style={{marginBottom:0}}><span className="amt">{window.rupiah(p.price)}</span></div>
+                <div className="prog-price" style={{ marginBottom: 0 }}><span className="amt">{rupiah(p.price)}</span></div>
               </div>
               <div className="prog-foot">
-                <button className="btn btn-green" onClick={()=>onOrder(p.id)}>Qurban Sekarang</button>
+                <button className="btn btn-green" onClick={() => onOrder(p.id)}>Qurban Sekarang</button>
               </div>
             </article>
           ))}
@@ -47,40 +47,38 @@ function Programs({ onOrder }){
     </section>
   );
 }
-window.Programs = Programs;
 
-function MediaSlider(){
-  const { useState, useRef, useEffect } = React;
-  const [idx,setIdx] = useState(0);
-  const [videoModal,setVideoModal] = useState({ open:false, url:null });
+export function MediaSlider() {
+  const [idx, setIdx] = useState(0);
+  const [videoModal, setVideoModal] = useState({ open: false, url: null });
   const trackRef = useRef(null);
-  const [per,setPer] = useState(3);
-  useEffect(()=>{
-    const calc=()=>{ const w=window.innerWidth; setPer(w<680?1:w<1040?2:3); };
-    calc(); window.addEventListener('resize',calc); return ()=>window.removeEventListener('resize',calc);
-  },[]);
-  const data = window.MEDIA;
-  const maxIdx = Math.max(0, data.length-per);
-  const clamped = Math.min(idx,maxIdx);
-  const go=(d)=>setIdx(v=>Math.max(0,Math.min(maxIdx,v+d)));
-  const pct = clamped*(100/per);
+  const [per, setPer] = useState(3);
+  useEffect(() => {
+    const calc = () => { const w = window.innerWidth; setPer(w < 680 ? 1 : w < 1040 ? 2 : 3); };
+    calc(); window.addEventListener('resize', calc); return () => window.removeEventListener('resize', calc);
+  }, []);
+  const data = MEDIA;
+  const maxIdx = Math.max(0, data.length - per);
+  const clamped = Math.min(idx, maxIdx);
+  const go = (d) => setIdx(v => Math.max(0, Math.min(maxIdx, v + d)));
+  const pct = clamped * (100 / per);
   return (
     <section className="media section-pad" id="media">
       <div className="wrap">
-        <div className="section-head reveal" style={{maxWidth:720}}>
+        <div className="section-head reveal" style={{ maxWidth: 720 }}>
           <span className="eyebrow on-dark">Media Nasional</span>
           <h2 className="h-section text-balance">Kami Telah Dipercaya, Diliput, dan Diakui</h2>
           <p className="lede text-pretty">Komitmen dan kualitas kami bukan hanya sekedar sebuah janji, melainkan bukti nyata. Program Qurban Alfatihah telah menjadi sorotan oleh berbagai berita nasional. Bukan untuk mencari sebuah perhatian, ini adalah dampak nyata yang kami ciptakan bersama para donatur terbaik seperti Anda.</p>
         </div>
         <div className="media-slider reveal d1">
-          <div style={{overflow:'hidden'}}>
-            <div className="media-track" ref={trackRef} style={{transform:`translateX(-${pct}%)`}}>
-              {data.map((m)=>(
-                <button onClick={()=>setVideoModal({open:true,url:m.link})} className="media-card" key={m.slot} style={{cursor:'pointer',background:'none',border:'none',padding:0}}>
+          <div style={{ overflow: 'hidden' }}>
+            <div className="media-track" ref={trackRef} style={{ transform: `translateX(-${pct}%)` }}>
+              {data.map((m) => (
+                <button onClick={() => setVideoModal({ open: true, url: m.link })} className="media-card" key={m.slot} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
                   <div className="media-thumb">
                     <span className="net">{m.net}</span>
-                    <img src={`https://img.youtube.com/vi/${m.link.split('/').pop().split('?')[0]}/sddefault.jpg`} alt={m.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-                    <span className="play" style={{position:'relative',zIndex:2}}><Ic.play style={{width:24,height:24,marginLeft:3}}/></span>
+                    <img src={`https://img.youtube.com/vi/${m.link.split('/').pop().split('?')[0]}/sddefault.jpg`} alt={m.title} loading="lazy" width={480} height={360} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <span className="play" style={{ position: 'relative', zIndex: 2 }}><Ic.play style={{ width: 24, height: 24, marginLeft: 3 }} /></span>
                   </div>
                   <div className="cap">{m.title}<small>{m.sub}</small></div>
                 </button>
@@ -88,43 +86,44 @@ function MediaSlider(){
             </div>
           </div>
           <div className="slider-ctrl">
-            <button onClick={()=>go(-1)} disabled={clamped===0} aria-label="Sebelumnya"><Ic.left style={{width:22,height:22}}/></button>
-            <button onClick={()=>go(1)} disabled={clamped>=maxIdx} aria-label="Berikutnya"><Ic.right style={{width:22,height:22}}/></button>
+            <button onClick={() => go(-1)} disabled={clamped === 0} aria-label="Sebelumnya"><Ic.left style={{ width: 22, height: 22 }} /></button>
+            <button onClick={() => go(1)} disabled={clamped >= maxIdx} aria-label="Berikutnya"><Ic.right style={{ width: 22, height: 22 }} /></button>
             <div className="slider-dots">
-              {Array.from({length:maxIdx+1}).map((_,i)=>(
-                <i key={i} className={i===clamped?'on':''} onClick={()=>setIdx(i)}></i>
+              {Array.from({ length: maxIdx + 1 }).map((_, i) => (
+                <i key={i} className={i === clamped ? 'on' : ''} onClick={() => setIdx(i)}></i>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      <div className={'media-modal-bg'+(videoModal.open?' open':'')} onClick={()=>setVideoModal({open:false,url:null})}>
-        <div className="media-modal" onClick={(e)=>e.stopPropagation()}>
-          <button className="modal-close" onClick={()=>setVideoModal({open:false,url:null})}>✕</button>
-          {videoModal.url && (
-            <iframe width="100%" height="600" src={videoModal.url.replace(/https:\/\/youtu\.be\//, 'https://www.youtube.com/embed/').split('?')[0]} title="YouTube video" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-          )}
+      {videoModal.open && (
+        <div className="media-modal-bg open" onClick={() => setVideoModal({ open: false, url: null })}>
+          <div className="media-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setVideoModal({ open: false, url: null })}>&#x2715;</button>
+            {videoModal.url && (
+              <iframe width="100%" height="600" src={videoModal.url.replace(/https:\/\/youtu\.be\//, 'https://www.youtube.com/embed/').split('?')[0]} title="YouTube video" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen loading="lazy"></iframe>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
-window.MediaSlider = MediaSlider;
 
-function Testimoni(){
+export function Testimoni() {
   return (
     <section className="testi section-pad" id="testimoni">
       <div className="wrap">
-        <div className="section-head reveal" style={{maxWidth:640}}>
+        <div className="section-head reveal" style={{ maxWidth: 640 }}>
           <span className="eyebrow">Testimoni</span>
           <h2 className="h-section text-balance">Suara Mereka yang Telah Merasakan</h2>
         </div>
         <div className="testi-grid">
-          {window.TESTI.map((t,i)=>(
-            <figure className={'tcard reveal d'+(i+1)} key={t.name}>
-              <div className="quote">”</div>
-              <div className="stars">★★★★★</div>
+          {TESTI.map((t, i) => (
+            <figure className={'tcard reveal d' + (i + 1)} key={t.name}>
+              <div className="quote">&ldquo;</div>
+              <div className="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               <p>{t.text}</p>
               <figcaption className="who">
                 <span className="av">{t.name[0]}</span>
@@ -137,103 +136,74 @@ function Testimoni(){
     </section>
   );
 }
-window.Testimoni = Testimoni;
 
-function Docs(){
-  const { useState, useEffect } = React;
+export function Docs() {
   const docs = [
     {
       title: "Keseruan Proses Penyembelihan",
-      photos: [
-        "assets/sembelih1.webp",
-        "assets/sembelih2.webp",
-        "assets/sembelih3.webp"
-      ]
+      photos: ["/assets/sembelih1.webp", "/assets/sembelih2.webp", "/assets/sembelih3.webp"]
     },
     {
       title: "Kunjungan Shohibul Qurban",
-      photos: [
-        "assets/kunjungan1.webp",
-        "assets/kunjungan2.webp",
-        "assets/kunjungan3.webp"
-      ]
+      photos: ["/assets/kunjungan1.webp", "/assets/kunjungan2.webp", "/assets/kunjungan3.webp"]
     },
     {
       title: "Distribusi Daging Qurban",
-      photos: [
-        "assets/distribusi1.webp",
-        "assets/distribusi2.webp",
-        "assets/distribusi3.webp"
-      ]
+      photos: ["/assets/distribusi1.webp", "/assets/distribusi2.webp", "/assets/distribusi3.webp"]
     }
   ];
 
-  const [slide, setSlide] = useState([0,0,0]);
+  const [slide, setSlide] = useState([0, 0, 0]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setSlide(prev =>
-        prev.map((v,i)=>
+        prev.map((v, i) =>
           v >= docs[i].photos.length - 1 ? 0 : v + 1
         )
       );
     }, 4000);
-
     return () => clearInterval(timer);
   }, []);
 
   return (
     <section className="docs section-pad">
       <div className="wrap">
-
-        <div className="section-head reveal" style={{maxWidth:640}}>
+        <div className="section-head reveal" style={{ maxWidth: 640 }}>
           <span className="eyebrow">Dokumentasi</span>
-          <h2 className="h-section text-balance">
-            Momen Nyata Penyaluran Qurban Anda
-          </h2>
-          <p className="lede text-pretty">
-            Setiap prosesnya kami rekam mulai dari penyembelihan hingga
-            senyuman penerima manfaat di pelosok negeri.
-          </p>
+          <h2 className="h-section text-balance">Momen Nyata Penyaluran Qurban Anda</h2>
+          <p className="lede text-pretty">Setiap prosesnya kami rekam mulai dari penyembelihan hingga senyuman penerima manfaat di pelosok negeri.</p>
         </div>
-
         <div className="docs-grid">
           {docs.map((group, groupIndex) => (
             <div className="docs-column" key={groupIndex}>
-
               <h3>{group.title}</h3>
-
               <div className="docs-image">
                 <img
                   src={group.photos[slide[groupIndex]]}
                   alt={group.title}
+                  width={400}
+                  height={320}
+                  loading="lazy"
                 />
               </div>
-
               <div className="slider-ctrl">
                 <button
                   onClick={() =>
                     setSlide(prev => {
                       const copy = [...prev];
-                      copy[groupIndex] =
-                        copy[groupIndex] === 0
-                          ? group.photos.length - 1
-                          : copy[groupIndex] - 1;
+                      copy[groupIndex] = copy[groupIndex] === 0 ? group.photos.length - 1 : copy[groupIndex] - 1;
                       return copy;
                     })
                   }
                 >
                   <Ic.left />
                 </button>
-
                 <button
                   onClick={() =>
                     setSlide(prev => {
                       const copy = [...prev];
-                      copy[groupIndex] =
-                        copy[groupIndex] >= group.photos.length - 1
-                          ? 0
-                          : copy[groupIndex] + 1;
+                      copy[groupIndex] = copy[groupIndex] >= group.photos.length - 1 ? 0 : copy[groupIndex] + 1;
                       return copy;
                     })
                   }
@@ -241,29 +211,24 @@ function Docs(){
                   <Ic.right />
                 </button>
               </div>
-
             </div>
           ))}
         </div>
-
       </div>
-
     </section>
   );
 }
 
-window.Docs = Docs;
-
-function CtaBand({ onOrder }){
+export function CtaBand({ onOrder }) {
   return (
     <section className="cta-band section-pad">
       <div className="wrap">
         <div className="cta-card reveal">
-          <div className="cta-orb" style={{width:300,height:300,top:-120,left:-80}} aria-hidden="true"></div>
-          <div className="cta-orb" style={{width:260,height:260,bottom:-120,right:-60}} aria-hidden="true"></div>
-          <div style={{position:'relative',zIndex:2}}>
-            <span className="eyebrow on-dark" style={{justifyContent:'center',display:'flex'}}>Ambil Peluang Ibadahmu</span>
-            <h2 className="h-section text-balance" style={{marginTop:16}}>Ambil peluang ibadah qurban Anda hari ini</h2>
+          <div className="cta-orb" style={{ width: 300, height: 300, top: -120, left: -80 }} aria-hidden="true"></div>
+          <div className="cta-orb" style={{ width: 260, height: 260, bottom: -120, right: -60 }} aria-hidden="true"></div>
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <span className="eyebrow on-dark" style={{ justifyContent: 'center', display: 'flex' }}>Ambil Peluang Ibadahmu</span>
+            <h2 className="h-section text-balance" style={{ marginTop: 16 }}>Ambil peluang ibadah qurban Anda hari ini</h2>
             <p>Satu langkah kecil darimu, sejuta senyum bagi mereka. Jangan tunda lagi kebaikan ini.</p>
             <a href="#program" className="btn btn-primary btn-lg">Qurban Sekarang Juga!<Ic.arrow className="arr" style={{ width: 20, height: 20 }} /></a>
           </div>
@@ -272,21 +237,20 @@ function CtaBand({ onOrder }){
     </section>
   );
 }
-window.CtaBand = CtaBand;
 
-function Footer(){
+export function Footer() {
   return (
     <footer className="footer">
       <div className="wrap">
         <div className="foot-grid">
           <div>
-            <Logo dark/>
+            <Logo dark />
             <p className="foot-desc">Qurban Alfatihah merupakan lembaga terpercaya yang menjembatani keikhlasan dan kebaikan Anda dengan menghadirkan senyum tulus dari mereka yang membutuhkan.</p>
             <div className="foot-social">
-              <a href="https://wa.me/6281128506752" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Ic.wa style={{width:20,height:20}}/></a>
-              <a href="#" aria-label="Instagram"><Ic.ig style={{width:20,height:20}}/></a>
-              <a href="#" aria-label="YouTube"><Ic.yt style={{width:20,height:20}}/></a>
-              <a href="https://qurban.alfatihah.com" target="_blank" rel="noreferrer" aria-label="Website"><Ic.globe style={{width:20,height:20}}/></a>
+              <a href="https://wa.me/6281128506752" target="_blank" rel="noreferrer" aria-label="WhatsApp"><Ic.wa style={{ width: 20, height: 20 }} /></a>
+              <a href="#" aria-label="Instagram"><Ic.ig style={{ width: 20, height: 20 }} /></a>
+              <a href="#" aria-label="YouTube"><Ic.yt style={{ width: 20, height: 20 }} /></a>
+              <a href="https://qurban.alfatihah.com" target="_blank" rel="noreferrer" aria-label="Website"><Ic.globe style={{ width: 20, height: 20 }} /></a>
             </div>
           </div>
           <div className="foot-col">
@@ -294,19 +258,18 @@ function Footer(){
             <ul>
               <li><a href="#program">Qurbanmu Sejuta Senyum</a></li>
               <li><a href="#program">Qurban Hemat Keluarga</a></li>
-              <li><a href="#program">Qurban Santri Penghafal Qur’an</a></li>
+              <li><a href="#program">Qurban Santri Penghafal Qur&apos;an</a></li>
               <li><a href="#tentang">Tentang Kami</a></li>
               <li><a href="#media">Media Nasional</a></li>
             </ul>
           </div>
           <div className="foot-col foot-contact">
             <h4>Kontak Kami</h4>
-            <div className="row"><span className="ic"><Ic.pin style={{width:18,height:18}}/></span><span>Jl. Ngablak Indah II No.24a, Bangetayu Kulon, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</span></div>
-            <div className="row"><span className="ic"><Ic.mail style={{width:18,height:18}}/></span><span>admin@alfatihah.com</span></div>
-            <div className="row"><span className="ic"><Ic.phone style={{width:18,height:18}}/></span><span>+62 811-2850-6752</span></div>
+            <div className="row"><span className="ic"><Ic.pin style={{ width: 18, height: 18 }} /></span><span>Jl. Ngablak Indah II No.24a, Bangetayu Kulon, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</span></div>
+            <div className="row"><span className="ic"><Ic.mail style={{ width: 18, height: 18 }} /></span><span>admin@alfatihah.com</span></div>
+            <div className="row"><span className="ic"><Ic.phone style={{ width: 18, height: 18 }} /></span><span>+62 811-2850-6752</span></div>
           </div>
         </div>
-
         <div className="legal">
           <span className="badge">SK Menkumham <b>AHU-0009981.AH.01.07/2017</b></span>
           <span className="badge">NPWP <b>82.204.833.6-503.000</b></span>
@@ -314,69 +277,65 @@ function Footer(){
           <span className="badge">Izin PUB <b>B/4745/460/VII/2024</b></span>
         </div>
         <div className="foot-bottom">
-          <span>© 2026 Qurban Alfatihah Inc.</span>
+          <span>&copy; 2026 Qurban Alfatihah Inc.</span>
         </div>
       </div>
     </footer>
   );
 }
-window.Footer = Footer;
 
-/* ---------- Order modal ---------- */
-function OrderModal({ open, preset, onClose }){
-  const { useState, useEffect } = React;
-  const [sel,setSel] = useState(preset||'senyum');
-  const [qty,setQty] = useState(1);
-  useEffect(()=>{ if(preset) setSel(preset); },[preset,open]);
-  useEffect(()=>{
-    document.body.style.overflow = open?'hidden':'';
-    return ()=>{ document.body.style.overflow=''; };
-  },[open]);
-  const prog = window.PROGRAMS.find(p=>p.id===sel) || window.PROGRAMS[0];
-  const total = prog.price*qty;
-  const submit=(e)=>{
+export function OrderModal({ open, preset, onClose }) {
+  const [sel, setSel] = useState(preset || 'senyum');
+  const [qty, setQty] = useState(1);
+  useEffect(() => { if (preset) setSel(preset); }, [preset, open]);
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+  const prog = PROGRAMS.find(p => p.id === sel) || PROGRAMS[0];
+  const total = prog.price * qty;
+  const submit = (e) => {
     e.preventDefault();
     onClose(true);
   };
   return (
-    <div className={'modal-bg'+(open?' open':'')} onClick={(e)=>{ if(e.target.classList.contains('modal-bg')) onClose(); }}>
+    <div className={'modal-bg' + (open ? ' open' : '')} onClick={(e) => { if (e.target.classList.contains('modal-bg')) onClose(); }}>
       <div className="modal" role="dialog" aria-modal="true" aria-label="Pesan Qurban">
         <div className="modal-head">
           <h3>Qurban Sekarang Juga!</h3>
           <p>Isi data singkat, tim kami lanjutkan via WhatsApp.</p>
-          <button className="x" onClick={()=>onClose()} aria-label="Tutup">✕</button>
+          <button className="x" onClick={() => onClose()} aria-label="Tutup">&#x2715;</button>
         </div>
         <form className="modal-body" onSubmit={submit}>
           <div className="field">
             <label>Pilih Program</label>
             <div className="prog-pick">
-              {window.PROGRAMS.map(p=>(
-                <label key={p.id} className={sel===p.id?'sel':''}>
-                  <input type="radio" name="prog" checked={sel===p.id} onChange={()=>setSel(p.id)}/>
+              {PROGRAMS.map(p => (
+                <label key={p.id} className={sel === p.id ? 'sel' : ''}>
+                  <input type="radio" name="prog" checked={sel === p.id} onChange={() => setSel(p.id)} />
                   <span>{p.title}</span>
-                  <span className="pp-price">{window.rupiah(p.price)}</span>
+                  <span className="pp-price">{rupiah(p.price)}</span>
                 </label>
               ))}
             </div>
           </div>
           <div className="field">
             <label>Jumlah</label>
-            <select value={qty} onChange={e=>setQty(+e.target.value)}>
-              {[1,2,3,4,5,7,10].map(n=><option key={n} value={n}>{n} ekor / paket</option>)}
+            <select value={qty} onChange={e => setQty(+e.target.value)}>
+              {[1, 2, 3, 4, 5, 7, 10].map(n => <option key={n} value={n}>{n} ekor / paket</option>)}
             </select>
           </div>
-          <div className="field"><label>Nama Lengkap</label><input required placeholder="Nama Anda / atas nama"/></div>
-          <div className="field"><label>Nomor WhatsApp</label><input required type="tel" placeholder="08xxxxxxxxxx"/></div>
+          <div className="field"><label>Nama Lengkap</label><input required placeholder="Nama Anda / atas nama" /></div>
+          <div className="field"><label>Nomor WhatsApp</label><input required type="tel" placeholder="08xxxxxxxxxx" /></div>
           <div className="summary">
-            <span style={{fontWeight:700,color:'var(--green-900)'}}>Total Donasi</span>
-            <span className="tot">{window.rupiah(total)}</span>
+            <span style={{ fontWeight: 700, color: 'var(--green-900)' }}>Total Donasi</span>
+            <span className="tot">{rupiah(total)}</span>
           </div>
-          <button className="btn btn-primary btn-lg" type="submit" style={{width:'100%'}}>
-            <Ic.wa style={{width:20,height:20}}/> Lanjut ke WhatsApp
+          <button className="btn btn-primary btn-lg" type="submit" style={{ width: '100%' }}>
+            <Ic.wa style={{ width: 20, height: 20 }} /> Lanjut ke WhatsApp
           </button>
         </form>
       </div>
     </div>
   );
 }
-window.OrderModal = OrderModal;

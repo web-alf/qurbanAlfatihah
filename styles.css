@@ -73,7 +73,7 @@ button{ font-family:inherit; cursor:pointer; border:none; }
 
 /* ---------- type ---------- */
 .eyebrow{
-  display:inline-flex; align-items:center; gap:10px; white-space:normal;
+  display:inline-flex; align-items:center; gap:10px; white-space:nowrap;
   font-size:.82rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
   color:var(--green-700);
 }
@@ -82,8 +82,8 @@ button{ font-family:inherit; cursor:pointer; border:none; }
 .eyebrow.on-dark::before{ background:var(--orange); }
 
 h1,h2,h3{ margin:0; line-height:1.04; letter-spacing:-.025em; font-weight:800; }
-.h-display{ font-size:clamp(1.1rem, 4.2vw, 3rem); }
-.h-section{ font-size:clamp(.8rem, 3vw, 2.2rem); letter-spacing:-.03em; }
+.h-display{ font-size:clamp(2.1rem, 4.2vw, 4rem); }
+.h-section{ font-size:clamp(1.8rem, 4vw, 3.2rem); letter-spacing:-.03em; }
 .h-card{ font-size:clamp(1.2rem,1.9vw,1.45rem); letter-spacing:-.02em; }
 .lede{ font-size:clamp(1rem,1.35vw,1.22rem); line-height:1.62; color:var(--muted); }
 .text-balance{ text-wrap:balance; }
@@ -113,7 +113,7 @@ section{ position:relative; }
 .btn-ghost:hover span{ color:var(--hero-bg); }
 .btn-white{ background:#fff; color:var(--green-800); box-shadow:var(--shadow-sm); }
 .btn-white:hover{ transform:translateY(-3px); }
-.btn-lg{ padding:16px 24px; font-size:.98rem; }
+.btn-lg{ padding:18px 34px; font-size:1.08rem; }
 .btn .arr{ transition:transform .2s; }
 .btn:hover .arr{ transform:translateX(4px); }
 
@@ -174,64 +174,6 @@ body[data-theme="terang"] .hero .hero-ink-muted{ color:var(--muted); }
 .hero-stats .st .n{ font-size:clamp(1.8rem,2.5vw,2.6rem); font-weight:800; letter-spacing:-.03em; line-height:1; white-space:nowrap; }
 .hero-stats .st .l{ font-size:clamp(.78rem,1vw,.92rem); opacity:.7; margin-top:0; font-weight:600; letter-spacing:.02em; white-space:normal; }
 .hero-stats .st .n .accent-text{ color:var(--accent); }
-
-@media (max-width: 992px){
-  .hero-split{
-    grid-template-columns: 1fr;
-    gap: 32px;
-    text-align:center;
-  }
-
-  .hero-copy{
-    max-width:100%;
-    margin:0 auto;
-  }
-
-  .hero-copy .lede{
-    max-width:100%;
-    margin-inline:auto;
-  }
-
-  .hero-cta{
-    justify-content:center;
-  }
-
-  .hero-stats{
-    justify-content:center;
-  }
-
-  .hero-art{
-    order:-1; /* gambar di atas teks */
-  }
-}
-
-@media (max-width:768px){
-
-  .hero{
-    padding-top:90px;
-  }
-
-  .hero-flyer{
-    max-width:100%;
-    min-height:auto;
-    height:auto;
-  }
-
-  .hero-copy h1{
-    font-size:clamp(2rem,8vw,3rem);
-  }
-
-  .hero-stats{
-    gap:20px;
-    flex-wrap:wrap;
-  }
-
-  .hero-stats .st{
-    flex:0 0 calc(50% - 10px);
-    align-items:center;
-    text-align:center;
-  }
-}
 
 /* flyer card */
 .flyer{
@@ -411,7 +353,12 @@ body[data-proglayout="rows"] .prog-foot{ flex-direction:column; align-items:stre
 .tcard .who .ct{ font-size:.84rem; color:var(--muted); }
 
 /* ---------- DOKUMENTASI ---------- */
-.docs {background:var(--green-mist);}
+.docs{ background:var(--green-mist); }
+.docs-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:48px; }
+.docs-column h3{ font-size:1.18rem; margin-bottom:16px; text-align:center; }
+.docs-image{ border-radius:var(--radius); overflow:hidden; }
+.docs-image img{ width:100%; height:320px; object-fit:cover; display:block; }
+
 .docs-slider{
   margin-top:40px;
 }
@@ -557,91 +504,3 @@ body[data-proglayout="rows"] .prog-foot{ flex-direction:column; align-items:stre
   .hero-center .flyer-row .flyer:nth-child(2){ margin-top:0; }
 }
 
-.docs-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:32px;
-  margin-top:40px;
-}
-
-.docs-column{
-  border-radius:24px;
-  padding:20px;
-}
-
-.docs-column h3{
-  text-align:center;
-  font-size:20px;
-  font-weight:700;
-  color:#14301c;
-  min-height: 70px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.docs-image{
-  border-radius:16px;
-  overflow:hidden;
-}
-
-.docs-image img{
-  width:100%;
-  height:420px;
-  object-fit:cover;
-  display:block;
-}
-
-.slider-ctrl{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  margin-top:24px;
-}
-
-/* ===== Mobile ===== */
-@media (max-width: 768px){
-  .docs-grid{
-    grid-template-columns:1fr;
-    gap:24px;
-  }
-
-  .docs-column{
-    padding:16px;
-    border-radius:20px;
-  }
-
-  .docs-column h3{
-    font-size:1.4rem;
-    margin-bottom:16px;
-  }
-
-  .docs-image img{
-    height:280px;
-  }
-
-  .slider-ctrl button{
-    width:52px;
-    height:52px;
-  }
-}
-
-/* ===== HP kecil ===== */
-@media (max-width: 480px){
-  .docs-column h3{
-    font-size:1.2rem;
-  }
-
-  .docs-image img{
-    height:220px;
-  }
-
-  .slider-ctrl{
-    gap:12px;
-  }
-
-  .slider-ctrl button{
-    width:48px;
-    height:48px;
-  }
-}

@@ -1,5 +1,6 @@
-/* icons.jsx — inline SVG icon set + brand mark for Qurban Alfatihah */
-const Ic = {
+import React from 'react';
+
+export const Ic = {
   shield: (p)=>(<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>),
   camera: (p)=>(<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></svg>),
   users: (p)=>(<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.2A3.2 3.2 0 0 1 16 11M21 20c0-2.6-1.5-4.5-3.6-5.2"/></svg>),
@@ -19,20 +20,17 @@ const Ic = {
   globe: (p)=>(<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...p}><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>),
 };
 
-/* Brand wordmark — replaceable logo placeholder */
-function Logo({ dark }){
+export function Logo({ dark }) {
   return (
     <a href="#top" className="logo" aria-label="Qurban Alfatihah">
       <span className="mark">
         <img
-          src="assets/logo.webp"
+          src="/assets/logo.webp"
           alt="Qurban Alfatihah"
-        ></img>
+          width={90}
+          height={90}
+        />
       </span>
-      {/* <span className="name">Qurban Alfatihah<small>Tebar Senyum Berkah</small></span> */}
     </a>
   );
 }
-
-window.Ic = Ic;
-window.Logo = Logo;
