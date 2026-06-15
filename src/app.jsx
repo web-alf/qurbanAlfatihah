@@ -3,19 +3,20 @@ import { Ic } from './icons.jsx';
 import { PROGRAMS } from './data.jsx';
 import { useReveal, onInView, Nav, Hero, TrustStrip, About, Ayat, WhyUs } from './sections-top.jsx';
 import { Programs, MediaSlider, Testimoni, Docs, CtaBand, Footer } from './sections-bottom.jsx';
-import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakSelect, TweakColor, TweakSlider, TweakButton } from './tweaks-panel.jsx';
 
-const TWEAK_DEFAULTS = {
-  "heroVariant": "split",
-  "theme": "hijau",
-  "accent": "#FF8C00",
-  "progLayout": "cards",
-  "fontScale": 1,
-  "radius": 22
+// Tampilan situs (tema, warna aksen, layout). Dulu bisa diubah live lewat
+// panel design-tool; sekarang dikunci ke nilai final di bawah.
+const THEME = {
+  heroVariant: 'split',
+  theme: 'hijau',
+  accent: '#FF8C00',
+  progLayout: 'cards',
+  fontScale: 1,
+  radius: 22,
 };
 
 export default function App() {
-  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const t = THEME;
   const [toast, setToast] = useState(false);
 
   useReveal(t.heroVariant);
@@ -83,30 +84,6 @@ export default function App() {
         <span className="ic"><Ic.check style={{ width: 22, height: 22 }} /></span>
         Terima kasih! Tim kami segera menghubungi Anda via WhatsApp.
       </div>
-
-      <TweaksPanel>
-        <TweakSection label="Tampilan Hero" />
-        <TweakRadio label="Layout hero" value={t.heroVariant}
-          options={[{ value: 'split', label: 'Split' }, { value: 'center', label: 'Tengah' }, { value: 'bold', label: 'Bold' }]}
-          onChange={(v) => setTweak('heroVariant', v)} />
-        <TweakSection label="Warna & Tema" />
-        <TweakSelect label="Skema warna" value={t.theme}
-          options={[{ value: 'hijau', label: 'Hijau Tegas' }, { value: 'terang', label: 'Terang / Putih' }, { value: 'oren', label: 'Hijau Gelap + Oren' }]}
-          onChange={(v) => setTweak('theme', v)} />
-        <TweakColor label="Warna aksen" value={t.accent}
-          options={['#FF8C00', '#F4A100', '#FF6B00', '#329600']}
-          onChange={(v) => setTweak('accent', v)} />
-        <TweakSection label="Layout & Skala" />
-        <TweakRadio label="Kartu program" value={t.progLayout}
-          options={[{ value: 'cards', label: 'Grid' }, { value: 'rows', label: 'Baris' }]}
-          onChange={(v) => setTweak('progLayout', v)} />
-        <TweakSlider label="Skala teks" value={t.fontScale} min={0.9} max={1.15} step={0.01}
-          onChange={(v) => setTweak('fontScale', v)} />
-        <TweakSlider label="Lengkung sudut" value={t.radius} min={4} max={32} step={1} unit="px"
-          onChange={(v) => setTweak('radius', v)} />
-        <TweakSection label="Aksi" />
-        <TweakButton label="Buka Form Pesan Qurban" onClick={() => openOrder()} />
-      </TweaksPanel>
     </>
   );
 }

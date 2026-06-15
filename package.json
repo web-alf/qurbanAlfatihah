@@ -2,7 +2,7 @@
   "name": "qurbanalfatihah",
   "version": "1.0.0",
   "description": "",
-  "main": "image-slot.js",
+  "main": "src/main.jsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

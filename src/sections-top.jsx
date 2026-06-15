@@ -93,10 +93,7 @@ export function Hero({ variant, onOrder }) {
             <button className="btn btn-primary btn-lg" onClick={onOrder}>Qurban Sekarang Juga! <Ic.arrow className="arr" style={{ width: 20, height: 20 }} /></button>
             <a className="btn btn-ghost btn-lg" href="#program" style={{ color: 'var(--hero-ink)' }}><span>Lihat Pilihan Program</span></a>
           </div>
-          <div className="flyer-row reveal d4">
-            <FlyerCard slot="hero-flyer-a" />
-            <FlyerCard slot="hero-flyer-b" />
-          </div>
+          <div className="reveal d4">{stats}</div>
         </div>
       </header>
     );
@@ -143,14 +140,6 @@ export function Hero({ variant, onOrder }) {
         </div>
       </div>
     </header>
-  );
-}
-
-function FlyerCard({ slot }) {
-  return (
-    <div className="flyer">
-      <image-slot id={slot} shape="rounded" radius="28" placeholder="Drop foto qurban"></image-slot>
-    </div>
   );
 }
 
