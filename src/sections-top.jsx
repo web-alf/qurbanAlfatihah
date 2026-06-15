@@ -1,40 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Ic, Logo } from './icons.jsx';
+import { Img } from './Img.jsx';
 
-export function useReveal(dep) {
+export function useReveal() {
   useEffect(() => {
-    let raf;
-    const check = () => {
-      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
-      document.querySelectorAll('.reveal:not(.in)').forEach(el => {
-        const r = el.getBoundingClientRect();
-        if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add('in');
+    const els = document.querySelectorAll('.reveal:not(.in)');
+    if (typeof IntersectionObserver === 'undefined') {
+      els.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
       });
-    };
-    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(check); };
-    check();
-    requestAnimationFrame(check);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf); };
-  }, [dep]);
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 }
 
 export function onInView(el, cb) {
   if (!el) return () => {};
-  let done = false;
-  const check = () => {
-    if (done) return;
-    const vh = window.innerHeight || 800;
-    const r = el.getBoundingClientRect();
-    if (r.top < vh * 0.9 && r.bottom > 0) { done = true; cb(); cleanup(); }
-  };
-  const onScroll = () => requestAnimationFrame(check);
-  const cleanup = () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  check(); requestAnimationFrame(check);
-  return cleanup;
+  if (typeof IntersectionObserver === 'undefined') { cb(); return () => {}; }
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some(e => e.isIntersecting)) { cb(); io.disconnect(); }
+  }, { threshold: 0.2 });
+  io.observe(el);
+  return () => io.disconnect();
 }
 
 export function CountUp({ to, suffix = '', dur = 1600 }) {
@@ -55,10 +47,18 @@ export function CountUp({ to, suffix = '', dur = 1600 }) {
 export function Nav({ onOrder }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40); h();
     window.addEventListener('scroll', h, { passive: true }); return () => window.removeEventListener('scroll', h);
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [open]);
   const links = [['#tentang', 'Tentang'], ['#program', 'Program'], ['#media', 'Media'], ['#testimoni', 'Testimoni']];
   return (
     <nav className={'nav' + (scrolled ? ' scrolled' : '')}>
@@ -67,7 +67,27 @@ export function Nav({ onOrder }) {
         <div className="nav-links">
           {links.map(([h, t]) => <a key={h} href={h}>{t}</a>)}
         </div>
+        <div className="nav-right">
+          <button className="btn btn-green hide-sm" onClick={onOrder}>Qurban Sekarang</button>
+          <button className="nav-burger" aria-label="Buka menu" aria-expanded={open} onClick={() => setOpen(true)}>
+            <Ic.menu style={{ width: 24, height: 24 }} />
+          </button>
+        </div>
       </div>
+
+      <div className={'nav-drawer-bg' + (open ? ' open' : '')} onClick={close} aria-hidden="true" />
+      <aside className={'nav-drawer' + (open ? ' open' : '')} aria-hidden={!open}>
+        <div className="nav-drawer-head">
+          <Logo />
+          <button className="nav-drawer-x" aria-label="Tutup menu" onClick={close}>&#x2715;</button>
+        </div>
+        <nav className="nav-drawer-links">
+          {links.map(([h, t]) => <a key={h} href={h} onClick={close}>{t}</a>)}
+        </nav>
+        <button className="btn btn-green btn-lg nav-drawer-cta" onClick={() => { close(); onOrder(); }}>
+          Qurban Sekarang Juga!
+        </button>
+      </aside>
     </nav>
   );
 }
@@ -168,9 +188,9 @@ export function About() {
     <section className="about section-pad" id="tentang">
       <div className="wrap about-grid">
         <div className="about-imgs reveal">
-          <img src="/assets/about3.webp" className="tall" loading="lazy" width={500} height={680} alt="Foto penyaluran" />
-          <img src="/assets/about2.webp" loading="lazy" width={500} height={340} alt="Foto kegiatan" />
-          <img src="/assets/about1.webp" loading="lazy" width={500} height={340} alt="Foto anak yatim" />
+          <Img src="/assets/about3.webp" className="tall" width={500} height={680} alt="Foto penyaluran" />
+          <Img src="/assets/about2.webp" width={500} height={340} alt="Foto kegiatan" />
+          <Img src="/assets/about1.webp" width={500} height={340} alt="Foto anak yatim" />
         </div>
         <div className="section-head reveal d1">
           <span className="eyebrow">Tentang Kami</span>

@@ -19,7 +19,7 @@ export default function App() {
   const t = THEME;
   const [toast, setToast] = useState(false);
 
-  useReveal(t.heroVariant);
+  useReveal();
 
   useEffect(() => { document.documentElement.classList.add('js-reveal'); }, []);
 

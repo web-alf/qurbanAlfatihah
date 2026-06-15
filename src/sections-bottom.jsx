@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Ic, Logo } from './icons.jsx';
+import { Img } from './Img.jsx';
 import { PROGRAMS, MEDIA, TESTI, rupiah } from './data.jsx';
 
 export function Programs({ onOrder }) {
@@ -16,12 +17,11 @@ export function Programs({ onOrder }) {
             <article className={'prog reveal d' + (i + 1)} key={p.id}>
               <div className="prog-media">
                 <span className={'prog-tag' + (p.tagGreen ? ' green' : '')}>{p.tag}</span>
-                <img
+                <Img
                   src={`/assets/program${i + 1}.webp`}
                   alt={p.title}
                   width={400}
                   height={300}
-                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = '/assets/hero.webp';
@@ -77,7 +77,7 @@ export function MediaSlider() {
                 <button onClick={() => setVideoModal({ open: true, url: m.link })} className="media-card" key={m.slot} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
                   <div className="media-thumb">
                     <span className="net">{m.net}</span>
-                    <img src={`https://img.youtube.com/vi/${m.link.split('/').pop().split('?')[0]}/sddefault.jpg`} alt={m.title} loading="lazy" width={480} height={360} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <Img src={`https://img.youtube.com/vi/${m.link.split('/').pop().split('?')[0]}/sddefault.jpg`} alt={m.title} width={480} height={360} />
                     <span className="play" style={{ position: 'relative', zIndex: 2 }}><Ic.play style={{ width: 24, height: 24, marginLeft: 3 }} /></span>
                   </div>
                   <div className="cap">{m.title}<small>{m.sub}</small></div>
@@ -179,12 +179,12 @@ export function Docs() {
             <div className="docs-column" key={groupIndex}>
               <h3>{group.title}</h3>
               <div className="docs-image">
-                <img
+                <Img
+                  key={group.photos[slide[groupIndex]]}
                   src={group.photos[slide[groupIndex]]}
                   alt={group.title}
                   width={400}
                   height={320}
-                  loading="lazy"
                 />
               </div>
               <div className="slider-ctrl">
